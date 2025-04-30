@@ -14,6 +14,24 @@ option(MOVIES "Compile support for movie playback (requires gstreamer)" ON)
 option(MDVIEW "Enable viewing Markdown notes (requires webkit2gtk)" ON)
 option(REST "Compile support for REST server (requires libsoup and libqrencode)" ON)
 
+include(FetchContent)
+
+FetchContent_Declare(
+    Corrosion
+    GIT_REPOSITORY https://github.com/corrosion-rs/corrosion.git
+    GIT_TAG v0.5
+)
+if (WIN32)
+    set(CMAKE_C_COMPILER_TARGET "x86_64-pc-windows-gnu")
+    set(CMAKE_CXX_COMPILER_TARGET "x86_64-pc-windows-gnu")
+endif ()
+FetchContent_MakeAvailable(Corrosion)
+corrosion_import_crate(MANIFEST_PATH pdf-export/Cargo.toml)
+corrosion_experimental_cbindgen(
+    TARGET pdf_export
+    HEADER_NAME pdf-export.h
+)
+
 add_subdirectory(src)
 add_subdirectory(icons)
 add_subdirectory(man)

@@ -310,6 +310,12 @@ namespace pdfpc {
          * that group in "next slide" view instead of the last slide.
          */
         public static bool next_slide_first_overlay = false;
+
+        /**
+         * When exiting the application, automatically save the drawings 
+         * next to the input PDF.
+         */
+        public static bool save_drawings_on_exit = false;
 #if REST
         /**
          * Run REST server

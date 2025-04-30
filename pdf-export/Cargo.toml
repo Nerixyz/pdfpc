@@ -1,0 +1,16 @@
+[package]
+name = "pdf-export"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+[dependencies]
+lopdf = { version = "0.36.0", default-features = false }
+
+[profile.release]
+panic = "abort"
+opt-level = "z"
+codegen-units = 1
+
+[lib]
+crate-type = ["staticlib"]

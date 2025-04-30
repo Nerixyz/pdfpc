@@ -1,0 +1,9 @@
+language = "C"
+
+include_guard = "PDF_EXPORT_H"
+
+[export]
+prefix = "pdf_export_"
+
+[enum]
+prefix_with_name = true

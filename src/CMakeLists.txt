@@ -170,6 +170,7 @@ CUSTOM_VAPIS
     ${CMAKE_CURRENT_SOURCE_DIR}/custom_binding.vapi
     ${CMAKE_CURRENT_SOURCE_DIR}/libmarkdown.vapi
     ${CMAKE_CURRENT_SOURCE_DIR}/libqrencode.vapi
+    ${CMAKE_CURRENT_SOURCE_DIR}/pdfexport.vapi
 )
 
 add_executable(pdfpc
@@ -197,6 +198,7 @@ target_link_libraries(pdfpc
     ${GSTINTERFACES_LIBRARIES}
     ${GSTVIDEO_LIBRARIES}
     ${ADDITIONAL_LIBS}
+    pdf_export
 )
 
 install(TARGETS
