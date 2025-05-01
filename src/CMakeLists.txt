@@ -148,6 +148,10 @@ if (CC_HAS_IMPLICIT_FUNCTION_DECLARATION)
     add_definitions("-Wno-implicit-function-declaration")
 endif()
 
+if(${CMAKE_HOST_WIN32})
+    set(EXTRA_VALA_OPTIONS ${EXTRA_VALA_OPTIONS} -D WIN32)
+endif()
+
 vala_precompile(VALA_C
     ${VALA_SRC}
 PACKAGES
