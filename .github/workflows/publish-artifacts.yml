@@ -42,12 +42,7 @@ jobs:
 
       - name: Flatten Directories
         working-directory: build
-        run: |
-          for file in */ ; do 
-            mv "$file$(find "$file" -type f -printf '%f')" ".tmp.${file%/}";
-            rm -rf "$file";
-            mv ".tmp.${file%/}" "${file%/}";
-          done
+        run: find . -mindepth 1 -type f -exec mv -t . -i '{}' +
         shell: bash
 
       - name: Dry Run
