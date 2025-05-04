@@ -1,4 +1,4 @@
-name: Publish Artifacts
+name: Publish artifacts
 
 on:
   workflow_run:
@@ -36,7 +36,7 @@ jobs:
       - name: Download artifact
         uses: dawidd6/action-download-artifact@v9
         with:
-          workflow: build.yml
+          workflow: cmake-windows.yml
           name_is_regexp: true
           path: build/
 
