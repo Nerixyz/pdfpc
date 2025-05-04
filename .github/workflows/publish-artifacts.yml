@@ -42,7 +42,9 @@ jobs:
 
       - name: Flatten Directories
         working-directory: build
-        run: find . -mindepth 1 -type f -exec mv -t . -i '{}' +
+        run: |
+          	find . -mindepth 1 -type f -exec mv -t . -i '{}' +
+            rm -r */
         shell: bash
 
       - name: Dry Run
