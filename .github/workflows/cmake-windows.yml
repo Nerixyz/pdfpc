@@ -2,9 +2,9 @@ name: CMake Windows
 
 on:
   push:
-    branches: [ "master" ]
+    branches: ["master"]
   pull_request:
-    branches: [ "master" ]
+    branches: ["master"]
 
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
@@ -22,29 +22,46 @@ jobs:
         shell: msys2 {0}
 
     steps:
-    - uses: actions/checkout@v3
-    - uses: msys2/setup-msys2@v2
-      with:
-        msystem: MINGW64
-        update: true
-        install: >-
-          mingw-w64-x86_64-cmake
-          mingw-w64-x86_64-ninja
-          mingw-w64-x86_64-gcc
-          mingw-w64-x86_64-pkg-config
-          mingw-w64-x86_64-vala       
-          mingw-w64-x86_64-libgee
-          mingw-w64-x86_64-poppler
-          mingw-w64-x86_64-gtk3
-          mingw-w64-x86_64-gstreamer
-          mingw-w64-x86_64-gst-plugins-base
-          mingw-w64-x86_64-json-glib
-          mingw-w64-x86_64-libsoup3
-          mingw-w64-x86_64-qrencode
-          mingw-w64-x86_64-discount
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # for tags
+      - uses: msys2/setup-msys2@v2
+        with:
+          msystem: MINGW64
+          update: true
+          install: >-
+            mingw-w64-x86_64-cmake
+            mingw-w64-x86_64-ninja
+            mingw-w64-x86_64-gcc
+            mingw-w64-x86_64-pkg-config
+            mingw-w64-x86_64-vala       
+            mingw-w64-x86_64-libgee
+            mingw-w64-x86_64-poppler
+            mingw-w64-x86_64-gtk3
+            mingw-w64-x86_64-gstreamer
+            mingw-w64-x86_64-gst-plugins-base
+            mingw-w64-x86_64-json-glib
+            mingw-w64-x86_64-libsoup3
+            mingw-w64-x86_64-qrencode
+            mingw-w64-x86_64-discount
 
-    - name: Configure CMake
-      run: cmake -B build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_MAKE_PROGRAM=ninja -DMDVIEW=OFF
+      - name: Configure CMake
+        run: cmake -B build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_MAKE_PROGRAM=ninja -DMDVIEW=OFF
 
-    - name: Build
-      run: cd build && ninja
+      - name: Build
+        run: cd build && ninja
+
+      - name: Package
+        working-directory: build
+        shell: powershell
+        run: |
+          cpack -G NSIS
+          cpack -G 7Z
+          rm -Recurse -Force packaged/_CPack_Packages
+
+      - name: Upload Packages
+        uses: actions/upload-artifact@v4
+        with:
+          # this will upload _one_ ZIP file
+          name: packages
+          path: build/packaged/*
