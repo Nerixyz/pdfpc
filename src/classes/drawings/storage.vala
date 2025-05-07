@@ -116,7 +116,7 @@ namespace pdfpc.Drawings.Storage {
 
                 // what should this factor be?
                 int base_width = (int)(width_pt * 2);
-                int base_height = (int)(width_pt * 2);
+                int base_height = (int)(height_pt * 2);
 
                 double occ_x1, occ_y1, occ_x2, occ_y2;
                 this.drawing_commands_storage[i].occupied_rect(out occ_x1, out occ_y1, out occ_x2, out occ_y2);
